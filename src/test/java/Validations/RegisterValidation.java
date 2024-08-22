@@ -18,9 +18,33 @@ public class RegisterValidation {
     }
 
     public void validationNewAcountCreated() {
+
         String ModalText = registerPage.getModalText().getText();
         Assertions.assertTrue(ModalText.contains("foi criada com sucesso"));
         registerPage.getCloseModalButton().click();
+    }
+
+    public void validationRegisterFields(String email, String name, String password, String passwordConfirmation) {
+
+        if(email == "" || password == "" || passwordConfirmation == ""){
+
+            String InputWarning = registerPage.getInputWarning().getText();
+            Assertions.assertTrue(InputWarning.contains("É campo obrigatório"));
+            return; 
+        }
+        if(name == "") {
+            String ModalText = registerPage.getModalText().getText();
+            Assertions.assertTrue(ModalText.contains("Nome não pode ser vazio."));
+            registerPage.getCloseModalButton().click();
+            return; 
+        } 
+        
+        if(password!= passwordConfirmation){
+            String ModalText = registerPage.getModalText().getText();
+            Assertions.assertTrue(ModalText.contains("As senhas não são iguais."));
+            registerPage.getCloseModalButton().click();
+        }
+        
     }
 
 

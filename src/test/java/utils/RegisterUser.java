@@ -4,7 +4,6 @@ import org.openqa.selenium.WebDriver;
 
 import Validations.RegisterValidation;
 import pages.RegisterPage;
-import tests.Setup;
 
 public class RegisterUser {
 
@@ -31,7 +30,13 @@ public class RegisterUser {
 
         registerPage.getSubmitFormRegisterButton().click();
 
-        registerValidation.validationNewAcountCreated();
+        if(email != "" && name != "" && password != "" && passwordConfirmation != "" && password == passwordConfirmation){
+            registerValidation.validationNewAcountCreated();
+
+        } else{
+            registerValidation.validationRegisterFields(email, name, password, password); 
+        }
+
 
 
         
@@ -48,7 +53,10 @@ public class RegisterUser {
 
         registerPage.getSubmitFormRegisterButton().click();
         registerValidation.validationNewAcountCreated();
-
         
     }
+
+    
+
+
 }

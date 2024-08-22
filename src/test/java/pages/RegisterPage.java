@@ -50,6 +50,11 @@ public class RegisterPage extends PageObject{
 
     }
 
+    public WebElement getInputWarning() {
+        return wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[@class='card__register']//p[text()='É campo obrigatório']"))); 
+
+    }
+
    
     
 }
