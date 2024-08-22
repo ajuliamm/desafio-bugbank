@@ -1,25 +1,20 @@
 package pages;
 
 import java.time.Duration;
-
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class PageObject {
 
+
         protected WebDriver driver; 
-        protected WebDriverWait wait;
+        protected WebDriverWait wait; 
 
-    public PageObject(WebDriver driver){
-            if(driver == null){
-                    this.driver = new ChromeDriver();
+        public PageObject(WebDriver driver){
+                this.driver = driver; 
+                this.wait = new WebDriverWait(driver, Duration.ofSeconds(30));
 
-            } else {
-
-                    this.driver = driver; 
-            }
-            this.driver.manage().timeouts().implicitlyWait(Duration.ofMillis(500));
-    }
+        }
+   
     
 }

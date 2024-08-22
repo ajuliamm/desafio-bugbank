@@ -1,5 +1,5 @@
 package tests;
 
-public class LoginTest {
-    
+public class LoginTest extends Setup{
+
 }

@@ -8,26 +8,28 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 
 public class Setup {
-    private String url = "https://bugbank.netlify.app/#";
-    private final WebDriver driver = inicializeSetup();
+
+    protected WebDriver driver;
+    private String URL_BASE = "https://bugbank.netlify.app/";
 
     @BeforeEach
-    public void beforeEach() {
-        driver.manage().timeouts().implicitlyWait(Duration.ofMillis(500));
-        driver.get(url);
+    public void setUp() {
+        driver = new ChromeDriver();
+        driver.get(URL_BASE);
+        this.driver.manage().timeouts().implicitlyWait(Duration.ofMillis(500));
+
     }
 
     @AfterEach
-    public void afterEach() {
-      driver.quit();
-    }
-  
-
-    public WebDriver inicializeSetup(){
-        return new ChromeDriver();    
+        public void tearDown() {
+            if (driver != null) {
+                driver.quit();
+            }
     }
 
-    public WebDriver getDriver() {
-        return driver;
+    public WebDriver getDriver(){
+        return driver; 
     }
+    
+
 }
