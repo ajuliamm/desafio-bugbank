@@ -20,6 +20,9 @@ public class RegisterValidation {
     public void validationNewAcountCreated() {
         String ModalText = registerPage.getModalText().getText();
         Assertions.assertTrue(ModalText.contains("foi criada com sucesso"));
+        registerPage.getCloseModalButton().click();
     }
+
+
     
 }

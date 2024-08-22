@@ -45,6 +45,11 @@ public class RegisterPage extends PageObject{
 
     }
 
+    public WebElement getCloseModalButton() {
+        return wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("btnCloseModal"))); 
+
+    }
+
    
     
 }
