@@ -10,7 +10,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 public class Setup {
 
     protected WebDriver driver;
-    private String URL_BASE = "https://bugbank.netlify.app/";
+    protected String URL_BASE = "https://bugbank.netlify.app/";
 
     @BeforeEach
     public void setUp() {
