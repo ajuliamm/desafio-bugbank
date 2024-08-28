@@ -30,7 +30,8 @@ public class HomeTest extends Setup{
     public void testShouldShowUserName(){
             
         RegisterUser registerUser = new RegisterUser(getDriver());
-        registerUser.registerNewAcount(email, name, password, password, false);
+        boolean balance = false; 
+        registerUser.registerNewAcount(email, name, password, password, balance);
         
         LoginUser loginUser = new LoginUser(getDriver());
         loginUser.LoginAccount(email, password);
@@ -40,6 +41,42 @@ public class HomeTest extends Setup{
 
         HomeValidation homeValidation = new HomeValidation(getDriver());
         homeValidation.validationUserName(name);
+
+    }
+
+    @Test
+    public void testShouldShowPositiveBalanceWhenAddBalance(){
+            
+        RegisterUser registerUser = new RegisterUser(getDriver());
+        boolean balance = true; 
+        registerUser.registerNewAcount(email, name, password, password, balance);
+        
+        LoginUser loginUser = new LoginUser(getDriver());
+        loginUser.LoginAccount(email, password);
+
+        HomePage homePage = new HomePage(getDriver());
+        homePage.getUserName();  
+
+        HomeValidation homeValidation = new HomeValidation(getDriver());
+        homeValidation.validationBalance(balance);
+
+    }
+
+    @Test
+    public void testShouldShowBalanceEqualZeroWhenNotAddBalance(){
+            
+        RegisterUser registerUser = new RegisterUser(getDriver());
+        boolean balance = false; 
+        registerUser.registerNewAcount(email, name, password, password, balance);
+        
+        LoginUser loginUser = new LoginUser(getDriver());
+        loginUser.LoginAccount(email, password);
+
+        HomePage homePage = new HomePage(getDriver());
+        homePage.getUserName();  
+
+        HomeValidation homeValidation = new HomeValidation(getDriver());
+        homeValidation.validationBalance(balance);
 
     }
 
