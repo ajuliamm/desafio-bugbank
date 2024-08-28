@@ -17,11 +17,16 @@ public class RegisterValidation {
 
     }
 
-    public void validationNewAcountCreated() {
+    public String validationNewAcountCreated() {
 
         String ModalText = registerPage.getModalText().getText();
         Assertions.assertTrue(ModalText.contains("foi criada com sucesso"));
         registerPage.getCloseModalButton().click();
+
+        String AccountNumber = ModalText.split(" ")[2];
+        //A conta 845-6 foi criada com sucesso
+
+        return AccountNumber;
     }
 
     public void validationRegisterFields(String email, String name, String password, String passwordConfirmation) {

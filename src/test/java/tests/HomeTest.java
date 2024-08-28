@@ -36,9 +36,6 @@ public class HomeTest extends Setup{
         LoginUser loginUser = new LoginUser(getDriver());
         loginUser.LoginAccount(email, password);
 
-        HomePage homePage = new HomePage(getDriver());
-        homePage.getUserName();  
-
         HomeValidation homeValidation = new HomeValidation(getDriver());
         homeValidation.validationUserName(name);
 
@@ -53,9 +50,6 @@ public class HomeTest extends Setup{
         
         LoginUser loginUser = new LoginUser(getDriver());
         loginUser.LoginAccount(email, password);
-
-        HomePage homePage = new HomePage(getDriver());
-        homePage.getUserName();  
 
         HomeValidation homeValidation = new HomeValidation(getDriver());
         homeValidation.validationBalance(balance);
@@ -72,12 +66,60 @@ public class HomeTest extends Setup{
         LoginUser loginUser = new LoginUser(getDriver());
         loginUser.LoginAccount(email, password);
 
-        HomePage homePage = new HomePage(getDriver());
-        homePage.getUserName();  
-
         HomeValidation homeValidation = new HomeValidation(getDriver());
         homeValidation.validationBalance(balance);
 
     }
+
+    @Test
+    public void testShouldVerifyAccountNumber(){
+            
+        RegisterUser registerUser = new RegisterUser(getDriver());
+        boolean balance = false; 
+        String accountNumberRegistered = registerUser.registerNewAcountAndReturnAccounNumber(email, name, password, password, balance);
+        
+        LoginUser loginUser = new LoginUser(getDriver());
+        loginUser.LoginAccount(email, password);
+
+        HomeValidation homeValidation = new HomeValidation(getDriver());
+        homeValidation.validationAccountNumber(accountNumberRegistered);
+
+
+
+    }
+
+    @Test
+    public void testShouldVerifyTransferButtonAndChangeToTransferPage(){
+            
+        RegisterUser registerUser = new RegisterUser(getDriver());
+        boolean balance = false; 
+        registerUser.registerNewAcount(email, name, password, password, balance);
+        
+        LoginUser loginUser = new LoginUser(getDriver());
+        loginUser.LoginAccount(email, password);
+        
+        HomeValidation homeValidation = new HomeValidation(getDriver());
+        homeValidation.validationButtons("transfer");
+
+
+    }
+
+    @Test
+    public void testShouldVerifyStatementButtonAndChangeToStatementPage(){
+            
+        RegisterUser registerUser = new RegisterUser(getDriver());
+        boolean balance = false; 
+        registerUser.registerNewAcount(email, name, password, password, balance);
+        
+        LoginUser loginUser = new LoginUser(getDriver());
+        loginUser.LoginAccount(email, password);
+        
+        HomeValidation homeValidation = new HomeValidation(getDriver());
+        homeValidation.validationButtons("statement");
+
+
+    }
+
+
 
 }

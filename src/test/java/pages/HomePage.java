@@ -16,6 +16,15 @@ public class HomePage extends PageObject{
     @FindBy(id = "textName")
     private WebElement textName; 
 
+    @FindBy(xpath = "//p[@id='textAccountNumber']//span")
+    private WebElement textAccountNumber; 
+
+    @FindBy(id = "btn-TRANSFERÊNCIA")
+    private WebElement btnTransfer; 
+
+    @FindBy(id = "btn-EXTRATO")
+    private WebElement btnStatement; 
+
 
     public HomePage(WebDriver driver) {
         super(driver);
@@ -34,5 +43,27 @@ public class HomePage extends PageObject{
     public WebElement getBalance(){
         return wait.until(ExpectedConditions.visibilityOf(textBalance));
     }
+
+    public WebElement getAccountNumber(){
+        return wait.until(ExpectedConditions.visibilityOf(textAccountNumber));
+    }
+
+    public WebElement getBtnTransfer(){
+        return wait.until(ExpectedConditions.visibilityOf(btnTransfer));
+    }
+
+    public WebElement getBtnStatement(){
+        return wait.until(ExpectedConditions.visibilityOf(btnStatement));
+    }
+
+    public String getTransferURL(){
+        return "https://bugbank.netlify.app/transfer";
+    }
+
+    public String getStatementURL(){
+        return "https://bugbank.netlify.app/bank-statement";
+    }
+
+
 
 }
