@@ -30,7 +30,7 @@ public class RegisterTest extends Setup{
 
         RegisterUser registerUser = new RegisterUser(getDriver()); 
 
-        registerUser.registerNewAcount(email, name, password, password);
+        registerUser.registerNewAcount(email, name, password, password, false);
 
     }
 
@@ -39,7 +39,7 @@ public class RegisterTest extends Setup{
 
         RegisterUser registerUser = new RegisterUser(getDriver()); 
 
-        registerUser.registerNewAcount(email, name, password, password);
+        registerUser.registerNewAcount(email, name, password, password, true);
 
     }
 
@@ -48,7 +48,7 @@ public class RegisterTest extends Setup{
 
         RegisterUser registerUser = new RegisterUser(getDriver()); 
 
-        registerUser.registerNewAcount("", name, password, password);
+        registerUser.registerNewAcount("", name, password, password, false);
         
     }
     @Test
@@ -56,7 +56,7 @@ public class RegisterTest extends Setup{
 
         RegisterUser registerUser = new RegisterUser(getDriver()); 
         
-        registerUser.registerNewAcount(email, name, "" , password);
+        registerUser.registerNewAcount(email, name, "" , password, false);
 
 
     }
@@ -65,7 +65,7 @@ public class RegisterTest extends Setup{
 
         RegisterUser registerUser = new RegisterUser(getDriver()); 
     
-        registerUser.registerNewAcount(email, name, password, "");
+        registerUser.registerNewAcount(email, name, password, "", false);
 
     }
 
@@ -74,7 +74,7 @@ public class RegisterTest extends Setup{
 
         RegisterUser registerUser = new RegisterUser(getDriver()); 
     
-        registerUser.registerNewAcount(email, "", password, password);
+        registerUser.registerNewAcount(email, "", password, password, false);
 
     }
 
@@ -83,7 +83,7 @@ public class RegisterTest extends Setup{
 
         RegisterUser registerUser = new RegisterUser(getDriver()); 
     
-        registerUser.registerNewAcount(email, name, password, passwordDifferente);
+        registerUser.registerNewAcount(email, name, password, passwordDifferente, false);
 
     }
 

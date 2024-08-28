@@ -30,14 +30,14 @@ public class HomeTest extends Setup{
     public void testShouldShowUserName(){
             
         RegisterUser registerUser = new RegisterUser(getDriver());
-        registerUser.registerNewAcount(email, name, password, password);
+        registerUser.registerNewAcount(email, name, password, password, false);
         
         LoginUser loginUser = new LoginUser(getDriver());
         loginUser.LoginAccount(email, password);
 
         HomePage homePage = new HomePage(getDriver());
         homePage.getUserName();  
-        
+
         HomeValidation homeValidation = new HomeValidation(getDriver());
         homeValidation.validationUserName(name);
 

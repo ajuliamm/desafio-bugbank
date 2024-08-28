@@ -29,7 +29,7 @@ public class LoginTest extends Setup{
     public void testShouldLoginWithSuccess(){
         
         RegisterUser registerUser = new RegisterUser(getDriver());
-        registerUser.registerNewAcount(email, name, password, password);
+        registerUser.registerNewAcount(email, name, password, password, false);
         
         LoginUser loginUser = new LoginUser(getDriver());
         loginUser.LoginAccount(email, password);
@@ -46,7 +46,7 @@ public class LoginTest extends Setup{
     public void testShouldNotLoginInvalidUser(){
         
         RegisterUser registerUser = new RegisterUser(getDriver());
-        registerUser.registerNewAcount(email, name, password, password);
+        registerUser.registerNewAcount(email, name, password, password, false);
         
         LoginUser loginUser = new LoginUser(getDriver());
         loginUser.LoginAccount(emailNonExistent, password);
@@ -65,7 +65,7 @@ public class LoginTest extends Setup{
     public void testShouldNotLoginInvalidPassword(){
         
         RegisterUser registerUser = new RegisterUser(getDriver());
-        registerUser.registerNewAcount(email, name, password, password);
+        registerUser.registerNewAcount(email, name, password, password, false);
         
         LoginUser loginUser = new LoginUser(getDriver());
         loginUser.LoginAccount(email, passwordDifferente);
@@ -82,7 +82,7 @@ public class LoginTest extends Setup{
     public void testShouldNotLoginWithBlankFieldEmail(){
 
         RegisterUser registerUser = new RegisterUser(getDriver());
-        registerUser.registerNewAcount(email, name, password, password);
+        registerUser.registerNewAcount(email, name, password, password, false);
         
         LoginUser loginUser = new LoginUser(getDriver());
         loginUser.LoginAccount("", password);
@@ -98,7 +98,7 @@ public class LoginTest extends Setup{
     public void testShouldNotLoginWithBlankFieldPassword(){
 
         RegisterUser registerUser = new RegisterUser(getDriver());
-        registerUser.registerNewAcount(email, name, password, password);
+        registerUser.registerNewAcount(email, name, password, password, false);
         
         LoginUser loginUser = new LoginUser(getDriver());
         loginUser.LoginAccount(email, "");
