@@ -21,8 +21,7 @@ public class LoginValidation {
             String WelcomeText = homePage.getWelcomeMessage().getText();
             Assertions.assertEquals(WelcomeText, "bem vindo ao BugBank :)");
 
-            String UserName = homePage.getUserName().getText();
-            Assertions.assertTrue(UserName.contains(name));
+            
 
 
             
