@@ -25,6 +25,18 @@ public class HomePage extends PageObject{
     @FindBy(id = "btn-EXTRATO")
     private WebElement btnStatement; 
 
+    @FindBy(id = "btn-SAQUE")
+    private WebElement btnSaque; 
+
+    @FindBy(id = "btn-PAGAMENTOS")
+    private WebElement btnPayment; 
+
+    @FindBy(id = "modalText")
+    private WebElement modalText; 
+
+    @FindBy(id = "btnExit")
+    private WebElement exitButton; 
+
 
     public HomePage(WebDriver driver) {
         super(driver);
@@ -56,6 +68,14 @@ public class HomePage extends PageObject{
         return wait.until(ExpectedConditions.visibilityOf(btnStatement));
     }
 
+    public WebElement getBtnSaque(){
+        return wait.until(ExpectedConditions.visibilityOf(btnSaque));
+    }
+
+    public WebElement getBtnPayment(){
+        return wait.until(ExpectedConditions.visibilityOf(btnPayment));
+    }
+
     public String getTransferURL(){
         return "https://bugbank.netlify.app/transfer";
     }
@@ -63,6 +83,15 @@ public class HomePage extends PageObject{
     public String getStatementURL(){
         return "https://bugbank.netlify.app/bank-statement";
     }
+
+    public WebElement getModalText() {
+        return wait.until(ExpectedConditions.visibilityOf(modalText)); 
+    }
+
+    public WebElement getExitButton() {
+        return wait.until(ExpectedConditions.visibilityOf(exitButton)); 
+    }
+
 
 
 

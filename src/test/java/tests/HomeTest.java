@@ -9,7 +9,6 @@ import com.github.javafaker.service.FakeValuesService;
 import com.github.javafaker.service.RandomService;
 
 import Validations.HomeValidation;
-import pages.HomePage;
 import utils.LoginUser;
 import utils.RegisterUser;
 
@@ -116,10 +115,49 @@ public class HomeTest extends Setup{
         
         HomeValidation homeValidation = new HomeValidation(getDriver());
         homeValidation.validationButtons("statement");
-
-
     }
 
+    @Test
+    public void testShouldVerifySaqueButton(){
+            
+        RegisterUser registerUser = new RegisterUser(getDriver());
+        boolean balance = false; 
+        registerUser.registerNewAcount(email, name, password, password, balance);
+        
+        LoginUser loginUser = new LoginUser(getDriver());
+        loginUser.LoginAccount(email, password);
+        
+        HomeValidation homeValidation = new HomeValidation(getDriver());
+        homeValidation.validationButtons("saque");
+    }
 
+    @Test
+    public void testShouldVerifyPaymentButton(){
+            
+        RegisterUser registerUser = new RegisterUser(getDriver());
+        boolean balance = false; 
+        registerUser.registerNewAcount(email, name, password, password, balance);
+        
+        LoginUser loginUser = new LoginUser(getDriver());
+        loginUser.LoginAccount(email, password);
+        
+        HomeValidation homeValidation = new HomeValidation(getDriver());
+        homeValidation.validationButtons("saque");
+    }
+
+    @Test
+    public void testShouldBackToLoginPageWhenExitButtonClicked(){
+            
+        RegisterUser registerUser = new RegisterUser(getDriver());
+        boolean balance = false; 
+        registerUser.registerNewAcount(email, name, password, password, balance);
+        
+        LoginUser loginUser = new LoginUser(getDriver());
+        loginUser.LoginAccount(email, password);
+        
+        HomeValidation homeValidation = new HomeValidation(getDriver());
+        homeValidation.validationLogout();
+
+    }
 
 }

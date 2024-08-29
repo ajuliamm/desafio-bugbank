@@ -59,6 +59,10 @@ public class LoginPage extends PageObject {
 
     }
 
+    public String getLoginURL(){
+        return "https://bugbank.netlify.app/";
+    }
+
     
 
 

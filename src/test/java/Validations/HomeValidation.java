@@ -62,6 +62,23 @@ public class HomeValidation {
             String urlActual = driver.getCurrentUrl();
             Assertions.assertEquals(homePage.getStatementURL(), urlActual);
         }
-        
+
+        if(button == "saque" || button == "payment"){
+            homePage.getBtnSaque().click();
+            String ModalText = homePage.getModalText().getText();
+            Assertions.assertTrue(ModalText.contains("Funcionalidade em desenvolvimento"));
+        }
+    }
+
+    public void validationLogout() {
+        homePage.getExitButton().click();
+
+        LoginPage loginPage = new LoginPage(driver); 
+    
+        wait.until(ExpectedConditions.urlToBe(loginPage.getLoginURL()));
+
+        String urlActual = driver.getCurrentUrl();
+        Assertions.assertEquals(loginPage.getLoginURL(), urlActual);
+
     }
 }
