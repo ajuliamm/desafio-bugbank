@@ -21,7 +21,12 @@ public class RegisterUser {
 
     public void registerNewAcount(String email, String name, String password, String passwordConfirmation, boolean isBalance){
 
+
         registerPage.getRegisterButton().click();
+
+        ClearFields clearFields = new ClearFields(driver);
+        clearFields.clearRegisterFields();
+
         registerPage.getEmailField().sendKeys(email);
         registerPage.getNameField().sendKeys(name);
         registerPage.getPasswordField().sendKeys(password);
@@ -45,6 +50,10 @@ public class RegisterUser {
     public String registerNewAcountAndReturnAccounNumber(String email, String name, String password, String passwordConfirmation, boolean isBalance){
 
         registerPage.getRegisterButton().click();
+
+        ClearFields clearFields = new ClearFields(driver);
+        clearFields.clearRegisterFields();
+        
         registerPage.getEmailField().sendKeys(email);
         registerPage.getNameField().sendKeys(name);
         registerPage.getPasswordField().sendKeys(password);
@@ -59,10 +68,6 @@ public class RegisterUser {
         String returnAccountNumber = registerValidation.validationNewAcountCreated();
 
         return returnAccountNumber; 
-
-        
-
-         
         
     }
 
