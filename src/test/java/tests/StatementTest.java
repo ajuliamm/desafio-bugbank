@@ -1,12 +1,10 @@
 package tests;
 
-import java.util.Locale;
 
 import org.junit.jupiter.api.Test;
 
-import com.github.javafaker.Faker;
-import com.github.javafaker.service.FakeValuesService;
-import com.github.javafaker.service.RandomService;
+import com.bugbank.tests.clients.ClientFake;
+
 
 import utils.HomeTasks;
 import utils.LoginUser;
@@ -17,68 +15,52 @@ import validations.StatementValidation;
 
 public class StatementTest extends Setup {
 
-    Faker faker = new Faker(); 
-    FakeValuesService fakeValuesService = new FakeValuesService(new Locale("en-GB"), new RandomService());
-
-    String email_1 = fakeValuesService.bothify("????##@gmail.com");
-    String name_1 = faker.name().fullName();
-    String password_1 = fakeValuesService.regexify("[a-z1-9]{10}");
-
-    String email_2 = fakeValuesService.bothify("????##@gmail.com");
-    String name_2 = faker.name().fullName();
-    String password_2 = fakeValuesService.regexify("[a-z1-9]{10}");
-
+    
     @Test
     public void testShouldShowEqualValuesToActualBalanceAndFirstStatementValueWhenOpenAccount() throws InterruptedException{
-        boolean balance_1 = false; 
-        boolean balance_2 = true; 
+
+        ClientFake clientFake_1 = new ClientFake(false); 
+        ClientFake clientFake_2 = new ClientFake(true); 
 
         RegisterUser registerUser = new RegisterUser(getDriver());
-        registerUser.registerNewAcount(email_1, name_1, password_1, password_1, balance_1);
-        Thread.sleep(3000);
-        registerUser.registerNewAcount(email_2, name_2, password_2, password_2, balance_2);        
-        Thread.sleep(3000);
+        registerUser.registerNewAcount(clientFake_1.getEmail(), clientFake_1.getName(), clientFake_1.getPassword(), clientFake_1.getPassword(), clientFake_1.isAddBalance());
+        registerUser.registerNewAcount(clientFake_2.getEmail(), clientFake_2.getName(), clientFake_2.getPassword(), clientFake_2.getPassword(), clientFake_2.isAddBalance());        
 
         LoginUser loginUser = new LoginUser(getDriver());
-        loginUser.LoginAccount(email_1, password_1);
-        Thread.sleep(3000);
+        loginUser.LoginAccount(clientFake_1.getEmail(), clientFake_1.getPassword());
 
         HomeTasks homeTasks = new HomeTasks(getDriver());
 
         homeTasks.goToStatementPage(); 
-        Thread.sleep(3000);
 
         StatementValidation statementValidation = new StatementValidation(getDriver());
-        statementValidation.validationStatementOpenAccount( balance_1); 
-        Thread.sleep(3000);
+        statementValidation.validationStatementOpenAccount( clientFake_1.isAddBalance()); 
 
         StatementTasks statementTasks = new StatementTasks(getDriver());
         statementTasks.exitAccount();
-        Thread.sleep(3000);
-
         
-        loginUser.LoginAccount(email_2, password_2);
-        Thread.sleep(3000);
+        loginUser.LoginAccount(clientFake_2.getEmail(), clientFake_2.getPassword());
 
         homeTasks.goToStatementPage(); 
-        Thread.sleep(3000);
 
-        statementValidation.validationStatementOpenAccount(balance_2); 
+        statementValidation.validationStatementOpenAccount(clientFake_2.isAddBalance()); 
 
     }
 
     @Test
     public void testShouldShowTransactionOnStatementPage(){
-        boolean balance = true; 
-        RegisterUser registerUser = new RegisterUser(getDriver());
-        registerUser.registerNewAcount(email_1, name_1, password_1, password_1, balance);
+        ClientFake clientFake_1 = new ClientFake(true); 
+        ClientFake clientFake_2 = new ClientFake(true); 
 
-        String accountNumber2 = registerUser.registerNewAcountAndReturnAccounNumber(email_2, name_2, password_2, password_2, balance);
+        RegisterUser registerUser = new RegisterUser(getDriver());
+        registerUser.registerNewAcount(clientFake_1.getEmail(), clientFake_1.getName(), clientFake_1.getPassword(), clientFake_1.getPassword(), clientFake_1.isAddBalance());
+
+        String accountNumber2 = registerUser.registerNewAcountAndReturnAccounNumber(clientFake_2.getEmail(), clientFake_2.getName(), clientFake_2.getPassword(), clientFake_2.getPassword(), clientFake_2.isAddBalance());
         String description = "Teste"; 
         String value = "200";
 
         LoginUser loginUser = new LoginUser(getDriver());
-        loginUser.LoginAccount(email_1, password_1);
+        loginUser.LoginAccount(clientFake_1.getEmail(), clientFake_1.getPassword());
         
         HomeTasks homeTasks = new HomeTasks(getDriver());
         Double actualBalance = homeTasks.getActualBalance();
@@ -93,7 +75,7 @@ public class StatementTest extends Setup {
         homeTasks.goToStatementPage();
 
         StatementValidation statementValidation = new StatementValidation(getDriver());
-        statementValidation.validationStatementTransaction( balance, actualBalance, value, description, "send"); 
+        statementValidation.validationStatementTransaction( clientFake_1.isAddBalance(), actualBalance, value, description, "send"); 
 
     }
     

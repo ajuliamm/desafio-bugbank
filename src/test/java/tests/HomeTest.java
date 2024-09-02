@@ -1,84 +1,77 @@
 package tests;
 
-import java.util.Locale;
-
 import org.junit.jupiter.api.Test;
 
-import com.github.javafaker.Faker;
-import com.github.javafaker.service.FakeValuesService;
-import com.github.javafaker.service.RandomService;
+import com.bugbank.tests.clients.ClientFake;
 
 import validations.HomeValidation;
 import utils.LoginUser;
 import utils.RegisterUser;
 
 public class HomeTest extends Setup{
-    Faker faker = new Faker(); 
-    FakeValuesService fakeValuesService = new FakeValuesService(new Locale("en-GB"), new RandomService());
-
-    String email = fakeValuesService.bothify("????##@gmail.com");
-    String emailNonExistent = fakeValuesService.bothify("????##@gmail.com");
-
-    String name = faker.name().fullName();
-    String password = fakeValuesService.regexify("[a-z1-9]{10}");
-    String passwordDifferente = fakeValuesService.regexify("[a-z1-9]{10}");
-
-    
+ 
 
     @Test
     public void testShouldShowUserName(){
+
+        ClientFake clientFake = new ClientFake(false); 
+
             
         RegisterUser registerUser = new RegisterUser(getDriver());
-        boolean balance = false; 
-        registerUser.registerNewAcount(email, name, password, password, balance);
+        registerUser.registerNewAcount(clientFake.getEmail(), clientFake.getName(), clientFake.getPassword(), clientFake.getPassword(), clientFake.isAddBalance());
         
         LoginUser loginUser = new LoginUser(getDriver());
-        loginUser.LoginAccount(email, password);
+        loginUser.LoginAccount(clientFake.getEmail(), clientFake.getPassword());
 
         HomeValidation homeValidation = new HomeValidation(getDriver());
-        homeValidation.validationUserName(name);
+        homeValidation.validationUserName(clientFake.getName());
 
     }
 
     @Test
     public void testShouldShowPositiveBalanceWhenAddBalance(){
-            
+
+        ClientFake clientFake = new ClientFake(true); 
+
         RegisterUser registerUser = new RegisterUser(getDriver());
-        boolean balance = true; 
-        registerUser.registerNewAcount(email, name, password, password, balance);
+        registerUser.registerNewAcount(clientFake.getEmail(), clientFake.getName(), clientFake.getPassword(), clientFake.getPassword(), clientFake.isAddBalance());
         
         LoginUser loginUser = new LoginUser(getDriver());
-        loginUser.LoginAccount(email, password);
+        loginUser.LoginAccount(clientFake.getEmail(), clientFake.getPassword());
 
         HomeValidation homeValidation = new HomeValidation(getDriver());
-        homeValidation.validationBalance(balance);
+        homeValidation.validationBalance(clientFake.isAddBalance());
 
     }
 
     @Test
     public void testShouldShowBalanceEqualZeroWhenNotAddBalance(){
+
+        ClientFake clientFake = new ClientFake(false); 
+
             
         RegisterUser registerUser = new RegisterUser(getDriver());
-        boolean balance = false; 
-        registerUser.registerNewAcount(email, name, password, password, balance);
+        registerUser.registerNewAcount(clientFake.getEmail(), clientFake.getName(), clientFake.getPassword(), clientFake.getPassword(), clientFake.isAddBalance());
         
         LoginUser loginUser = new LoginUser(getDriver());
-        loginUser.LoginAccount(email, password);
+        loginUser.LoginAccount(clientFake.getEmail(), clientFake.getPassword());
 
         HomeValidation homeValidation = new HomeValidation(getDriver());
-        homeValidation.validationBalance(balance);
+        homeValidation.validationBalance(clientFake.isAddBalance());
 
     }
 
     @Test
     public void testShouldVerifyAccountNumber(){
+
+        ClientFake clientFake = new ClientFake(false); 
             
         RegisterUser registerUser = new RegisterUser(getDriver());
-        boolean balance = false; 
-        String accountNumberRegistered = registerUser.registerNewAcountAndReturnAccounNumber(email, name, password, password, balance);
+    
+        String accountNumberRegistered = registerUser.registerNewAcountAndReturnAccounNumber(clientFake.getEmail(), clientFake.getName(), clientFake.getPassword(), clientFake.getPassword(), clientFake.isAddBalance());
         
         LoginUser loginUser = new LoginUser(getDriver());
-        loginUser.LoginAccount(email, password);
+        loginUser.LoginAccount(clientFake.getEmail(), clientFake.getPassword());
 
         HomeValidation homeValidation = new HomeValidation(getDriver());
         homeValidation.validationAccountNumber(accountNumberRegistered);
@@ -89,13 +82,13 @@ public class HomeTest extends Setup{
 
     @Test
     public void testShouldVerifyTransferButtonAndChangeToTransferPage(){
+        ClientFake clientFake = new ClientFake(false); 
             
         RegisterUser registerUser = new RegisterUser(getDriver());
-        boolean balance = false; 
-        registerUser.registerNewAcount(email, name, password, password, balance);
+        registerUser.registerNewAcount(clientFake.getEmail(), clientFake.getName(), clientFake.getPassword(), clientFake.getPassword(), clientFake.isAddBalance());
         
         LoginUser loginUser = new LoginUser(getDriver());
-        loginUser.LoginAccount(email, password);
+        loginUser.LoginAccount(clientFake.getEmail(), clientFake.getPassword());
         
         HomeValidation homeValidation = new HomeValidation(getDriver());
         homeValidation.validationButtons("transfer");
@@ -105,13 +98,13 @@ public class HomeTest extends Setup{
 
     @Test
     public void testShouldVerifyStatementButtonAndChangeToStatementPage(){
+        ClientFake clientFake = new ClientFake(false); 
             
         RegisterUser registerUser = new RegisterUser(getDriver());
-        boolean balance = false; 
-        registerUser.registerNewAcount(email, name, password, password, balance);
+        registerUser.registerNewAcount(clientFake.getEmail(), clientFake.getName(), clientFake.getPassword(), clientFake.getPassword(), clientFake.isAddBalance());
         
         LoginUser loginUser = new LoginUser(getDriver());
-        loginUser.LoginAccount(email, password);
+        loginUser.LoginAccount(clientFake.getEmail(), clientFake.getPassword());
         
         HomeValidation homeValidation = new HomeValidation(getDriver());
         homeValidation.validationButtons("statement");
@@ -119,13 +112,15 @@ public class HomeTest extends Setup{
 
     @Test
     public void testShouldVerifySaqueButton(){
+
+        ClientFake clientFake = new ClientFake(false); 
             
         RegisterUser registerUser = new RegisterUser(getDriver());
-        boolean balance = false; 
-        registerUser.registerNewAcount(email, name, password, password, balance);
+
+        registerUser.registerNewAcount(clientFake.getEmail(), clientFake.getName(), clientFake.getPassword(), clientFake.getPassword(), clientFake.isAddBalance());
         
         LoginUser loginUser = new LoginUser(getDriver());
-        loginUser.LoginAccount(email, password);
+        loginUser.LoginAccount(clientFake.getEmail(), clientFake.getPassword());
         
         HomeValidation homeValidation = new HomeValidation(getDriver());
         homeValidation.validationButtons("saque");
@@ -133,13 +128,14 @@ public class HomeTest extends Setup{
 
     @Test
     public void testShouldVerifyPaymentButton(){
+        ClientFake clientFake = new ClientFake(false); 
             
         RegisterUser registerUser = new RegisterUser(getDriver());
-        boolean balance = false; 
-        registerUser.registerNewAcount(email, name, password, password, balance);
+       
+        registerUser.registerNewAcount(clientFake.getEmail(), clientFake.getName(), clientFake.getPassword(), clientFake.getPassword(), clientFake.isAddBalance());
         
         LoginUser loginUser = new LoginUser(getDriver());
-        loginUser.LoginAccount(email, password);
+        loginUser.LoginAccount(clientFake.getEmail(), clientFake.getPassword());
         
         HomeValidation homeValidation = new HomeValidation(getDriver());
         homeValidation.validationButtons("saque");
@@ -147,13 +143,14 @@ public class HomeTest extends Setup{
 
     @Test
     public void testShouldBackToLoginPageWhenExitButtonClicked(){
-            
+
+        ClientFake clientFake = new ClientFake(false); 
+
         RegisterUser registerUser = new RegisterUser(getDriver());
-        boolean balance = false; 
-        registerUser.registerNewAcount(email, name, password, password, balance);
+        registerUser.registerNewAcount(clientFake.getEmail(), clientFake.getName(), clientFake.getPassword(), clientFake.getPassword(), clientFake.isAddBalance());
         
         LoginUser loginUser = new LoginUser(getDriver());
-        loginUser.LoginAccount(email, password);
+        loginUser.LoginAccount(clientFake.getEmail(), clientFake.getPassword());
         
         HomeValidation homeValidation = new HomeValidation(getDriver());
         homeValidation.validationLogout();

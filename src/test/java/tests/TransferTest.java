@@ -1,12 +1,8 @@
 package tests;
 
-import java.util.Locale;
-
 import org.junit.jupiter.api.Test;
 
-import com.github.javafaker.Faker;
-import com.github.javafaker.service.FakeValuesService;
-import com.github.javafaker.service.RandomService;
+import com.bugbank.tests.clients.ClientFake;
 
 import validations.TransferValidation;
 import utils.HomeTasks;
@@ -15,33 +11,23 @@ import utils.RegisterUser;
 import utils.TransferTasks;
 
 public class TransferTest extends Setup{
-    Faker faker = new Faker(); 
-    FakeValuesService fakeValuesService = new FakeValuesService(new Locale("en-GB"), new RandomService());
-
-    String email_1 = fakeValuesService.bothify("????##@gmail.com");
-    String name_1 = faker.name().fullName();
-    String password_1 = fakeValuesService.regexify("[a-z1-9]{10}");
-
-    String email_2 = fakeValuesService.bothify("????##@gmail.com");
-    String name_2 = faker.name().fullName();
-    String password_2 = fakeValuesService.regexify("[a-z1-9]{10}");
-
 
     
     @Test
     public void testShouldSendTransferFormWithSuccess(){
-        
-        boolean balance = true; 
+        ClientFake clientFake_1 = new ClientFake(true); 
+        ClientFake clientFake_2 = new ClientFake(true); 
+
         RegisterUser registerUser = new RegisterUser(getDriver());
-        registerUser.registerNewAcount(email_1, name_1, password_1, password_1, balance);
+        registerUser.registerNewAcount(clientFake_1.getEmail(), clientFake_1.getName(), clientFake_1.getPassword(), clientFake_1.getPassword(), clientFake_1.isAddBalance());
 
 
-        String accountNumberUserTwo = registerUser.registerNewAcountAndReturnAccounNumber(email_2, name_2, password_2, password_2, balance);
+        String accountNumberUserTwo = registerUser.registerNewAcountAndReturnAccounNumber(clientFake_2.getEmail(), clientFake_2.getName(), clientFake_2.getPassword(), clientFake_2.getPassword(), clientFake_2.isAddBalance());
         String description = "Teste"; 
         String value = "200";
 
         LoginUser loginUser = new LoginUser(getDriver());
-        loginUser.LoginAccount(email_1, password_1);
+        loginUser.LoginAccount(clientFake_1.getEmail(), clientFake_2.getPassword());
         
         HomeTasks homeTasks = new HomeTasks(getDriver());
         homeTasks.goToTransferPage(); 
@@ -58,15 +44,16 @@ public class TransferTest extends Setup{
     @Test
     public void testShouldNotTransferToOwnAccount(){
         
-        boolean balance = true; 
+        ClientFake clientFake_1 = new ClientFake(true); 
+        
         RegisterUser registerUser = new RegisterUser(getDriver());
 
-        String accountNumber = registerUser.registerNewAcountAndReturnAccounNumber(email_1, name_1, password_1, password_1, balance);
+        String accountNumber = registerUser.registerNewAcountAndReturnAccounNumber(clientFake_1.getEmail(), clientFake_1.getName(), clientFake_1.getPassword(), clientFake_1.getPassword(), clientFake_1.isAddBalance());
         String description = "Teste"; 
         String value = "200";
 
         LoginUser loginUser = new LoginUser(getDriver());
-        loginUser.LoginAccount(email_1, password_1);
+        loginUser.LoginAccount(clientFake_1.getEmail(), clientFake_1.getPassword());
         
         HomeTasks homeTasks = new HomeTasks(getDriver());
         homeTasks.goToTransferPage(); 
@@ -75,26 +62,23 @@ public class TransferTest extends Setup{
         transferTasks.transfer(accountNumber, value , description);
 
         TransferValidation transferValidation = new TransferValidation(getDriver());
-        transferValidation.validationTransferInvalid(accountNumber, accountNumber, value, balance );
-
-        
+        transferValidation.validationTransferInvalid(accountNumber, accountNumber, value, clientFake_1.isAddBalance() );
 
     }
 
     @Test
     public void testShouldNotSendTransferWithAccountFieldBlank(){
-        
-        boolean balance = true; 
-        RegisterUser registerUser = new RegisterUser(getDriver());
-        String accountNumber1 = registerUser.registerNewAcountAndReturnAccounNumber(email_1, name_1, password_1, password_1, balance);
+        ClientFake clientFake_1 = new ClientFake(true); 
 
+        RegisterUser registerUser = new RegisterUser(getDriver());
+        String accountNumber1 = registerUser.registerNewAcountAndReturnAccounNumber(clientFake_1.getEmail(), clientFake_1.getName(), clientFake_1.getPassword(), clientFake_1.getPassword(), clientFake_1.isAddBalance());
 
         String accountNumber2Blank = "";
         String description = "Teste"; 
         String value = "200";
 
         LoginUser loginUser = new LoginUser(getDriver());
-        loginUser.LoginAccount(email_1, password_1);
+        loginUser.LoginAccount(clientFake_1.getEmail(), clientFake_1.getPassword());
         
         HomeTasks homeTasks = new HomeTasks(getDriver());
         homeTasks.goToTransferPage(); 
@@ -103,24 +87,25 @@ public class TransferTest extends Setup{
         transferTasks.transfer(accountNumber2Blank, value , description);
 
         TransferValidation transferValidation = new TransferValidation(getDriver());
-        transferValidation.validationTransferInvalid(accountNumber1, accountNumber2Blank,  value, balance );
+        transferValidation.validationTransferInvalid(accountNumber1, accountNumber2Blank,  value, clientFake_1.isAddBalance() );
 
     }
 
     @Test
     public void testShouldNotSendTransferWithValueFieldBlank(){
-        
-        boolean balance = true; 
+        ClientFake clientFake_1 = new ClientFake(true); 
+        ClientFake clientFake_2 = new ClientFake(true); 
+
         RegisterUser registerUser = new RegisterUser(getDriver());
-        String accountNumber1 = registerUser.registerNewAcountAndReturnAccounNumber(email_1, name_1, password_1, password_1, balance);
+        String accountNumber1 = registerUser.registerNewAcountAndReturnAccounNumber(clientFake_1.getEmail(), clientFake_1.getName(), clientFake_1.getPassword(), clientFake_1.getPassword(), clientFake_1.isAddBalance());
 
 
-        String accountNumber2 = registerUser.registerNewAcountAndReturnAccounNumber(email_2, name_2, password_2, password_2, balance);
+        String accountNumber2 = registerUser.registerNewAcountAndReturnAccounNumber(clientFake_2.getEmail(), clientFake_2.getName(), clientFake_2.getPassword(), clientFake_2.getPassword(), clientFake_2.isAddBalance());
         String description = "Teste"; 
         String value = "";
 
         LoginUser loginUser = new LoginUser(getDriver());
-        loginUser.LoginAccount(email_1, password_1);
+        loginUser.LoginAccount(clientFake_1.getEmail(), clientFake_1.getPassword());
         
         HomeTasks homeTasks = new HomeTasks(getDriver());
         homeTasks.goToTransferPage(); 
@@ -130,24 +115,24 @@ public class TransferTest extends Setup{
 
         TransferValidation transferValidation = new TransferValidation(getDriver());
 
-        transferValidation.validationTransferInvalid(accountNumber1, accountNumber2,  value, balance);
+        transferValidation.validationTransferInvalid(accountNumber1, accountNumber2,  value, clientFake_1.isAddBalance());
 
     }
 
     @Test
     public void testShouldNotSendTransferWithValueFieldNotANumber(){
-        
-        boolean balance = true; 
+        ClientFake clientFake_1 = new ClientFake(true); 
+        ClientFake clientFake_2 = new ClientFake(true); 
+
         RegisterUser registerUser = new RegisterUser(getDriver());
-        String accountNumber1 = registerUser.registerNewAcountAndReturnAccounNumber(email_1, name_1, password_1, password_1, balance);
+        String accountNumber1 = registerUser.registerNewAcountAndReturnAccounNumber(clientFake_1.getEmail(), clientFake_1.getName(), clientFake_1.getPassword(), clientFake_1.getPassword(), clientFake_1.isAddBalance());
 
-
-        String accountNumber2 = registerUser.registerNewAcountAndReturnAccounNumber(email_2, name_2, password_2, password_2, balance);
+        String accountNumber2 = registerUser.registerNewAcountAndReturnAccounNumber(clientFake_2.getEmail(), clientFake_2.getName(), clientFake_2.getPassword(), clientFake_2.getPassword(), clientFake_2.isAddBalance());
         String description = "Teste"; 
         String value = "abc";
 
         LoginUser loginUser = new LoginUser(getDriver());
-        loginUser.LoginAccount(email_1, password_1);
+        loginUser.LoginAccount(clientFake_1.getEmail(), clientFake_1.getPassword());
         
         HomeTasks homeTasks = new HomeTasks(getDriver());
         homeTasks.goToTransferPage(); 
@@ -157,24 +142,25 @@ public class TransferTest extends Setup{
 
         TransferValidation transferValidation = new TransferValidation(getDriver());
 
-        transferValidation.validationTransferInvalid(accountNumber1, accountNumber2,  value, balance );
+        transferValidation.validationTransferInvalid(accountNumber1, accountNumber2,  value, clientFake_1.isAddBalance() );
 
     }
 
     @Test
     public void testShouldSendTransferWithDescriptionFieldBlank(){
-        
-        boolean balance = true; 
+        ClientFake clientFake_1 = new ClientFake(true); 
+        ClientFake clientFake_2 = new ClientFake(true); 
+
         RegisterUser registerUser = new RegisterUser(getDriver());
-        String accountNumber1 = registerUser.registerNewAcountAndReturnAccounNumber(email_1, name_1, password_1, password_1, balance);
+        registerUser.registerNewAcount(clientFake_1.getEmail(), clientFake_1.getName(), clientFake_1.getPassword(), clientFake_1.getPassword(), clientFake_1.isAddBalance());
 
 
-        String accountNumber2 = registerUser.registerNewAcountAndReturnAccounNumber(email_2, name_2, password_2, password_2, balance);
+        String accountNumber2 = registerUser.registerNewAcountAndReturnAccounNumber(clientFake_2.getEmail(), clientFake_2.getName(), clientFake_2.getPassword(), clientFake_2.getPassword(), clientFake_2.isAddBalance());
         String description = ""; 
         String value = "200";
 
         LoginUser loginUser = new LoginUser(getDriver());
-        loginUser.LoginAccount(email_1, password_1);
+        loginUser.LoginAccount(clientFake_1.getEmail(), clientFake_1.getPassword());
         
         HomeTasks homeTasks = new HomeTasks(getDriver());
         homeTasks.goToTransferPage(); 
@@ -190,18 +176,19 @@ public class TransferTest extends Setup{
 
     @Test
     public void testShouldNotSendTransferWithNoBalance(){
+        ClientFake clientFake_1 = new ClientFake(false); 
+        ClientFake clientFake_2 = new ClientFake(false); 
         
-        boolean balance = false; 
         RegisterUser registerUser = new RegisterUser(getDriver());
-        String accountNumber1 = registerUser.registerNewAcountAndReturnAccounNumber(email_1, name_1, password_1, password_1, balance);
+        registerUser.registerNewAcount(clientFake_1.getEmail(), clientFake_1.getName(), clientFake_1.getPassword(), clientFake_1.getPassword(), clientFake_1.isAddBalance());
+//
 
-
-        String accountNumber2 = registerUser.registerNewAcountAndReturnAccounNumber(email_2, name_2, password_2, password_2, balance);
+        String accountNumber2 = registerUser.registerNewAcountAndReturnAccounNumber(clientFake_2.getEmail(), clientFake_2.getName(), clientFake_2.getPassword(), clientFake_2.getPassword(), clientFake_2.isAddBalance());
         String description = "Teste"; 
         String value = "200";
 
         LoginUser loginUser = new LoginUser(getDriver());
-        loginUser.LoginAccount(email_1, password_1);
+        loginUser.LoginAccount(clientFake_1.getEmail(), clientFake_1.getPassword());
         
         HomeTasks homeTasks = new HomeTasks(getDriver());
         Double actualBalance = homeTasks.getActualBalance();
@@ -213,24 +200,24 @@ public class TransferTest extends Setup{
 
         TransferValidation transferValidation = new TransferValidation(getDriver());
 
-        transferValidation.validationBalanceTransfer( balance, actualBalance, value );
+        transferValidation.validationBalanceTransfer( clientFake_1.isAddBalance(), actualBalance, value );
 
     }
 
     @Test
     public void testShouldNotSendTransferWithValueBiggerThanBalance(){
+        ClientFake clientFake_1 = new ClientFake(true); 
+        ClientFake clientFake_2 = new ClientFake(true); 
         
-        boolean balance = true; 
         RegisterUser registerUser = new RegisterUser(getDriver());
-        String accountNumber1 = registerUser.registerNewAcountAndReturnAccounNumber(email_1, name_1, password_1, password_1, balance);
+       registerUser.registerNewAcount(clientFake_1.getEmail(), clientFake_1.getName(), clientFake_1.getPassword(), clientFake_1.getPassword(), clientFake_1.isAddBalance());
 
-
-        String accountNumber2 = registerUser.registerNewAcountAndReturnAccounNumber(email_2, name_2, password_2, password_2, balance);
+        String accountNumber2 = registerUser.registerNewAcountAndReturnAccounNumber(clientFake_2.getEmail(), clientFake_2.getName(), clientFake_2.getPassword(), clientFake_2.getPassword(), clientFake_2.isAddBalance());
         String description = "Teste"; 
         
 
         LoginUser loginUser = new LoginUser(getDriver());
-        loginUser.LoginAccount(email_1, password_1);
+        loginUser.LoginAccount(clientFake_1.getEmail(), clientFake_1.getPassword());
         
         HomeTasks homeTasks = new HomeTasks(getDriver());
         double actualBalance = homeTasks.getActualBalance();
@@ -243,7 +230,7 @@ public class TransferTest extends Setup{
         transferTasks.transfer(accountNumber2, value , description);
 
         TransferValidation transferValidation = new TransferValidation(getDriver());
-        transferValidation.validationBalanceTransfer( balance, actualBalance, value );
+        transferValidation.validationBalanceTransfer( clientFake_1.isAddBalance(), actualBalance, value );
 
     }
 }

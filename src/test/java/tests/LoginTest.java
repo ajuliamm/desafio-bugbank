@@ -1,13 +1,9 @@
 package tests;
 
-import java.util.Locale;
-
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import com.github.javafaker.Faker;
-import com.github.javafaker.service.FakeValuesService;
-import com.github.javafaker.service.RandomService;
+import com.bugbank.tests.clients.ClientFake;
 
 import validations.LoginValidation;
 import utils.LoginUser;
@@ -15,27 +11,22 @@ import utils.RegisterUser;
 
 public class LoginTest extends Setup{
 
-    Faker faker = new Faker(); 
-    FakeValuesService fakeValuesService = new FakeValuesService(new Locale("en-GB"), new RandomService());
-
-    String email = fakeValuesService.bothify("????##@gmail.com");
-    String emailNonExistent = fakeValuesService.bothify("????##@gmail.com");
-
-    String name = faker.name().fullName();
-    String password = fakeValuesService.regexify("[a-z1-9]{10}");
-    String passwordDifferente = fakeValuesService.regexify("[a-z1-9]{10}");
 
     @Test
     public void testShouldLoginWithSuccess(){
+
+        ClientFake clientFake = new ClientFake(false); 
+
         
         RegisterUser registerUser = new RegisterUser(getDriver());
-        registerUser.registerNewAcount(email, name, password, password, false);
+        
+        registerUser.registerNewAcount(clientFake.getEmail(), clientFake.getName(), clientFake.getPassword(), clientFake.getPassword(), clientFake.isAddBalance());
         
         LoginUser loginUser = new LoginUser(getDriver());
-        loginUser.LoginAccount(email, password);
+        loginUser.LoginAccount(clientFake.getEmail(), clientFake.getPassword());
 
         LoginValidation loginValidation = new LoginValidation(getDriver());
-        loginValidation.validationLogIn(name);
+        loginValidation.validationLogIn(clientFake.getName());
 
         String urlAtual = getDriver().getCurrentUrl();
         Assertions.assertEquals(URL_BASE+"home", urlAtual);
@@ -44,18 +35,22 @@ public class LoginTest extends Setup{
 
     @Test
     public void testShouldNotLoginInvalidUser(){
+
+        ClientFake clientFake = new ClientFake(false); 
+        String emailNonExistent = "emailInexistente@gmail.com";
+
         
         RegisterUser registerUser = new RegisterUser(getDriver());
-        registerUser.registerNewAcount(email, name, password, password, false);
+        registerUser.registerNewAcount(clientFake.getEmail(), clientFake.getName(), clientFake.getPassword(), clientFake.getPassword(), clientFake.isAddBalance());
         
         LoginUser loginUser = new LoginUser(getDriver());
-        loginUser.LoginAccount(emailNonExistent, password);
+        loginUser.LoginAccount(emailNonExistent, clientFake.getPassword());
 
         String urlAtual = getDriver().getCurrentUrl();
         Assertions.assertEquals(URL_BASE, urlAtual);
 
         LoginValidation loginValidation = new LoginValidation(getDriver());
-        loginValidation.validationInvalidLogin(email, emailNonExistent, password, password);;
+        loginValidation.validationInvalidLogin(clientFake.getEmail(), emailNonExistent, clientFake.getPassword(), clientFake.getPassword());;
 
         
 
@@ -63,51 +58,60 @@ public class LoginTest extends Setup{
 
     @Test
     public void testShouldNotLoginInvalidPassword(){
+
+        ClientFake clientFake = new ClientFake(false); 
+        String passwordDifferent = "senhaErrada";
+
         
         RegisterUser registerUser = new RegisterUser(getDriver());
-        registerUser.registerNewAcount(email, name, password, password, false);
+        registerUser.registerNewAcount(clientFake.getEmail(), clientFake.getName(), clientFake.getPassword(), clientFake.getPassword(), clientFake.isAddBalance());
         
         LoginUser loginUser = new LoginUser(getDriver());
-        loginUser.LoginAccount(email, passwordDifferente);
+        loginUser.LoginAccount(clientFake.getEmail(), passwordDifferent);
 
         String urlAtual = getDriver().getCurrentUrl();
         Assertions.assertEquals(URL_BASE, urlAtual);
 
         LoginValidation loginValidation = new LoginValidation(getDriver());
-        loginValidation.validationInvalidLogin(email, email, password, passwordDifferente);
+        loginValidation.validationInvalidLogin(clientFake.getEmail(), clientFake.getEmail(), clientFake.getPassword(), passwordDifferent);
 
     }
 
     @Test
     public void testShouldNotLoginWithBlankFieldEmail(){
+        ClientFake clientFake = new ClientFake(false); 
+
 
         RegisterUser registerUser = new RegisterUser(getDriver());
-        registerUser.registerNewAcount(email, name, password, password, false);
+        registerUser.registerNewAcount(clientFake.getEmail(), clientFake.getName(), clientFake.getPassword(), clientFake.getPassword(), clientFake.isAddBalance());
         
         LoginUser loginUser = new LoginUser(getDriver());
-        loginUser.LoginAccount("", password);
+        loginUser.LoginAccount("", clientFake.getPassword());
 
         String urlAtual = getDriver().getCurrentUrl();
         Assertions.assertEquals(URL_BASE, urlAtual);
 
         LoginValidation loginValidation = new LoginValidation(getDriver());
-        loginValidation.validationInvalidLogin(email, "", password, password);
+        loginValidation.validationInvalidLogin(clientFake.getEmail(), "", clientFake.getPassword(), clientFake.getPassword());
     }
 
     @Test
     public void testShouldNotLoginWithBlankFieldPassword(){
 
+        ClientFake clientFake = new ClientFake(false); 
+
+
         RegisterUser registerUser = new RegisterUser(getDriver());
-        registerUser.registerNewAcount(email, name, password, password, false);
+        registerUser.registerNewAcount(clientFake.getEmail(), clientFake.getName(), clientFake.getPassword(), clientFake.getPassword(), clientFake.isAddBalance());
         
         LoginUser loginUser = new LoginUser(getDriver());
-        loginUser.LoginAccount(email, "");
+        loginUser.LoginAccount(clientFake.getEmail(), "");
 
         String urlAtual = getDriver().getCurrentUrl();
         Assertions.assertEquals(URL_BASE, urlAtual);
 
         LoginValidation loginValidation = new LoginValidation(getDriver());
-        loginValidation.validationInvalidLogin(email, email, password, "");
+        loginValidation.validationInvalidLogin(clientFake.getEmail(), clientFake.getEmail(), clientFake.getPassword(), "");
     }
 
 }
