@@ -38,6 +38,9 @@ public class TransferPage extends PageObject{
     @FindBy(id = "btnCloseModal")
     private WebElement closeModalButton; 
 
+    @FindBy(id = "btnBack")
+    private WebElement btnBack; 
+
 
 
     public WebElement getModalText() {
@@ -76,6 +79,10 @@ public class TransferPage extends PageObject{
 
     public WebElement getFormTransfer() {
         return wait.until(ExpectedConditions.visibilityOf(formTransfer)); 
+    }
+
+    public WebElement getButtonBack() {
+        return wait.until(ExpectedConditions.visibilityOf(btnBack)); 
     }
 
 

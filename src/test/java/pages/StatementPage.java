@@ -20,6 +20,30 @@ public class StatementPage extends PageObject{
     @FindBy(id = "textBalanceAvailable")
     private WebElement textBalanceAvailable; 
 
+    @FindBy(id = "textTransferValue")
+    private WebElement textTransferValue; 
+
+    @FindBy(id = "textTypeTransaction")
+    private WebElement textTypeTransaction; 
+
+    @FindBy(id = "textDescription")
+    private WebElement textDescription; 
+
+    @FindBy(xpath = "(//p[@id='textTransferValue'])[last()]")
+    private WebElement lastTextTransferValue; 
+
+    @FindBy(xpath = "(//p[@id='textTypeTransaction'])[last()]")
+    private WebElement lastTextTypeTransaction; 
+
+    @FindBy(xpath = "(//p[@id='textDescription'])[last()]")
+    private WebElement lastTxtDescription; 
+
+    @FindBy(id = "btnBack")
+    private WebElement btnBack; 
+
+    @FindBy(id = "btnExit")
+    private WebElement btnExit; 
+
     public WebElement getModalText() {
         return wait.until(ExpectedConditions.visibilityOf(modalText)); 
     }
@@ -31,5 +55,40 @@ public class StatementPage extends PageObject{
     public WebElement getTextBalanceAvailable() {
         return wait.until(ExpectedConditions.visibilityOf(textBalanceAvailable)); 
     }
+
+    public WebElement getTextTransferValue() {
+        return wait.until(ExpectedConditions.visibilityOf(textTransferValue)); 
+    }
+    
+    public WebElement getTextTypeTransaction() {
+        return wait.until(ExpectedConditions.visibilityOf(textTypeTransaction)); 
+    }
+
+    public WebElement getTextDescription() {
+        return wait.until(ExpectedConditions.visibilityOf(textDescription)); 
+    }
+
+    public WebElement getLastTextTransferValue() {
+        return wait.until(ExpectedConditions.visibilityOf(lastTextTransferValue)); 
+    }
+    
+    public WebElement getLastTextTypeTransaction() {
+        return wait.until(ExpectedConditions.visibilityOf(lastTextTypeTransaction)); 
+    }
+
+    public WebElement getLastTextDescription() {
+        return wait.until(ExpectedConditions.visibilityOf(lastTxtDescription)); 
+    }
+
+
+    public WebElement getButtonBack() {
+        return wait.until(ExpectedConditions.visibilityOf(btnBack)); 
+    }
+
+    public WebElement getButtonExit() {
+        return wait.until(ExpectedConditions.visibilityOf(btnExit)); 
+    }
+    
+    
     
 }

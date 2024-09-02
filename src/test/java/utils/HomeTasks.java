@@ -38,6 +38,15 @@ public class HomeTasks {
         return balanceDouble; 
     }
 
+    public void goToStatementPage() {
+        homePage.getBtnStatement().click();
+    }
+
+    public void exitAccount() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'exitAccount'");
+    }
+
 
     
 }

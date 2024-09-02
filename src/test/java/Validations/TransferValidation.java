@@ -5,7 +5,6 @@ import java.time.Duration;
 import org.junit.jupiter.api.Assertions;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import pages.HomePage;
@@ -16,7 +15,7 @@ public class TransferValidation {
     WebDriver driver;
     WebDriverWait wait; 
     TransferPage transferPage;
-        HomePage homePage;
+    HomePage homePage;
 
     public TransferValidation(WebDriver driver) {
         this.driver = driver;

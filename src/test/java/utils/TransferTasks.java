@@ -40,12 +40,17 @@ public class TransferTasks {
             transferPage.getFormTransfer().submit();
         }
 
-        
-
-
-
-
     }
+
+    public void backToHomePage(){
+        transferPage.getButtonBack().click();
+    }
+
+    public void closeModal(){
+        transferPage.getCloseModalButton().click();
+    }
+
+
 
 
 }
