@@ -1,4 +1,4 @@
-package Validations;
+package validations;
 
 import java.time.Duration;
 
@@ -33,7 +33,7 @@ public class TransferValidation {
 
     }
 
-    public void validationTransferInvalid(String accountToSend, String accountToReceived, String value){
+    public void validationTransferInvalid(String accountToSend, String accountToReceived, String value, boolean balance){
         if(accountToSend == accountToReceived){
             String ModalText = transferPage.getModalText().getText();
             Assertions.assertTrue(ModalText.contains("Nao pode transferir pra mesmo conta"));
@@ -41,7 +41,7 @@ public class TransferValidation {
 
         }
         
-        if(accountToReceived == ""){
+        if(accountToReceived.isEmpty()){
             WebElement warningText = transferPage.getInputWarning();
             Assertions.assertTrue(warningText.isDisplayed());
 
@@ -53,7 +53,16 @@ public class TransferValidation {
             Assertions.assertTrue(warningText.contains("transferValue must be a `number` type, but the final value was: `NaN`"));
         }
 
-    
+
+    }
+
+    public void validationBalanceTransfer(boolean balance, double balanceBeforeTransfer, String value){
+        if(!balance || balanceBeforeTransfer < Double.valueOf(value)){
+            String ModalText = transferPage.getModalText().getText();
+            Assertions.assertTrue(ModalText.contains("Você não tem saldo suficiente para essa transação"));
+            transferPage.getCloseModalButton().click();
+
+        }
 
     }
 }

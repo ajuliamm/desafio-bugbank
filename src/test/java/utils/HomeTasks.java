@@ -20,6 +20,24 @@ public class HomeTasks {
         homePage.getBtnTransfer().click();
     }
 
+    public Double getActualBalance(){
+        String balanceString = homePage.getBalance().getText().split(" ")[1].trim();
+
+        balanceString = balanceString.replace(".", "");
+        balanceString = balanceString.replace(",", ".");
+
+        Double balanceDouble;
+        try {
+            balanceDouble = Double.valueOf(balanceString);
+        } catch (NumberFormatException e) {
+            System.err.println("Erro ao converter a string para Double: " + e.getMessage());
+            balanceDouble = null; // 
+
+            return balanceDouble;
+        }
+        return balanceDouble; 
+    }
+
 
     
 }

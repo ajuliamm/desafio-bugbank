@@ -9,7 +9,7 @@ import com.github.javafaker.Faker;
 import com.github.javafaker.service.FakeValuesService;
 import com.github.javafaker.service.RandomService;
 
-import Validations.LoginValidation;
+import validations.LoginValidation;
 import utils.LoginUser;
 import utils.RegisterUser;
 

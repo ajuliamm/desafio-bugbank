@@ -2,7 +2,7 @@ package utils;
 
 import org.openqa.selenium.WebDriver;
 
-import Validations.RegisterValidation;
+import validations.RegisterValidation;
 import pages.RegisterPage;
 
 public class RegisterUser {

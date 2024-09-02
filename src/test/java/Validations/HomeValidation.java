@@ -1,4 +1,4 @@
-package Validations;
+package validations;
 import java.time.Duration; 
 import org.junit.jupiter.api.Assertions;
 import org.openqa.selenium.WebDriver;
