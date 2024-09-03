@@ -43,8 +43,8 @@ public class HomeTasks {
     }
 
     public void exitAccount() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'exitAccount'");
+        homePage.getExitButton().click();
+
     }
 
 

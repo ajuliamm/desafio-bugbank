@@ -60,6 +60,23 @@ public class StatementValidation {
             Assertions.assertEquals(textTarnsferValue, valueSend);
 
         }
+        if(typeTransaction == "received"){
+
+            String OpenAccountText = statementPage.getLastTextTypeTransaction().getText();
+            Assertions.assertTrue(OpenAccountText.contains("Transferência recebida"));
+
+            StatementTasks statementTasks = new StatementTasks(driver);
+
+            String balanceAvailable = statementPage.getTextBalanceAvailable().getText().split(" ")[1];
+            Double balanceAvailableDouble = statementTasks.formatValueToDouble(balanceAvailable);
+
+            Double valueSend = statementTasks.formatValueToDouble(value);        
+            Assertions.assertEquals(balanceBeforeTransaction + valueSend, balanceAvailableDouble);
+
+            Double textTarnsferValue= statementTasks.formatValueToDouble(statementPage.getLastTextTransferValue().getText().split(" ")[1]);
+            Assertions.assertEquals(textTarnsferValue, valueSend);
+
+        }
         
 
 

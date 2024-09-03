@@ -2,7 +2,6 @@ package utils;
 
 import org.openqa.selenium.WebDriver;
 
-import pages.HomePage;
 import pages.TransferPage;
 
 public class TransferTasks {
